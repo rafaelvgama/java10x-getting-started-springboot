@@ -32,7 +32,7 @@ public class NinjaController {
     }
 
     @DeleteMapping("deleteNinja")
-    public String deteleNinjaById() {
+    public String deleteNinjaById() {
         return "Delete ninja by ID";
     }
 }

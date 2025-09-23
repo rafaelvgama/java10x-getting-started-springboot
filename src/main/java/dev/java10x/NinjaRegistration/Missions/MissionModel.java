@@ -1,5 +1,6 @@
 package dev.java10x.NinjaRegistration.Missions;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.java10x.NinjaRegistration.Ninjas.NinjaModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,5 +28,6 @@ public class MissionModel {
     private String description;
 
     @OneToMany(mappedBy = "mission")
+    @JsonIgnore
     private List<NinjaModel> ninjas;
 }

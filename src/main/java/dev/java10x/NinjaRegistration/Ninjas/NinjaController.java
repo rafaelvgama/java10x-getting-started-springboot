@@ -34,13 +34,13 @@ public class NinjaController {
         return ninjaService.createNinja(ninja);
     }
 
-    @PutMapping("/update")
-    public String updateNinjaById() {
-        return "Ninja updated";
+    @PutMapping("/update/{id}")
+    public NinjaModel updateNinjaById(@PathVariable Long id, @RequestBody NinjaModel ninja) {
+        return ninjaService.updateNinja(id, ninja);
     }
 
-    @DeleteMapping("/delete")
-    public String deleteNinjaById() {
-        return "Ninja deleted";
+    @DeleteMapping("/delete/{id}")
+    public void deleteNinjaById(@PathVariable Long id) {
+        ninjaService.deleteNinjaById(id);
     }
 }

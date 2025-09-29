@@ -4,34 +4,44 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class NinjaService {
 
     private final NinjaRepository ninjaRepository;
+    private final NinjaMapper ninjaMapper;
 
-    public NinjaService(NinjaRepository ninjaRepository) {
+    public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper) {
         this.ninjaRepository = ninjaRepository;
+        this.ninjaMapper = ninjaMapper;
     }
 
-    public List<NinjaModel> listNinjas() {
-        return ninjaRepository.findAll();
+    public List<NinjaDTO> listNinjas() {
+        List<NinjaModel> ninjas = ninjaRepository.findAll();
+        return ninjas.stream()
+                .map(ninjaMapper::map)
+                .collect(Collectors.toList());
     }
 
-    public NinjaModel listNinjaById(Long id) {
+    public NinjaDTO listNinjaById(Long id) {
         Optional<NinjaModel> ninja = ninjaRepository.findById(id);
-        return ninja.orElse(null);
+        return ninja.map(ninjaMapper::map).orElse(null);
     }
 
-    public NinjaModel createNinja(NinjaModel ninja) {
-        return ninjaRepository.save(ninja);
+    public NinjaDTO createNinja(NinjaDTO ninjaDTO) {
+        NinjaModel ninja = ninjaMapper.map(ninjaDTO);
+        ninja = ninjaRepository.save(ninja);
+        return ninjaMapper.map(ninja);
     }
 
-    public NinjaModel updateNinja(Long id, NinjaModel ninja) {
-        if (ninjaRepository.existsById(id)) {
-            ninja.setId(id);
-            return ninjaRepository.save(ninja);
+    public NinjaDTO updateNinja(Long id, NinjaDTO ninjaDTO) {
+        Optional<NinjaModel> ninjaExists = ninjaRepository.findById(id);
+        if (ninjaExists.isPresent()) {
+            NinjaModel updatedNinja = ninjaMapper.map(ninjaDTO);
+            updatedNinja.setId(id);
+            NinjaModel savedNinja = ninjaRepository.save(updatedNinja);
+            return ninjaMapper.map(savedNinja);
         }
         return null;
     }

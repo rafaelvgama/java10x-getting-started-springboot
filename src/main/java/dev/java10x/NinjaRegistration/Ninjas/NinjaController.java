@@ -20,22 +20,22 @@ public class NinjaController {
     }
 
     @GetMapping("/list")
-    public List<NinjaModel> listNinjas() {
+    public List<NinjaDTO> listNinjas() {
         return ninjaService.listNinjas();
     }
 
     @GetMapping("list/{id}")
-    public NinjaModel listNinjaById(@PathVariable Long id) {
+    public NinjaDTO listNinjaById(@PathVariable Long id) {
         return ninjaService.listNinjaById(id);
     }
 
     @PostMapping("/create")
-    public NinjaModel createNinja(@RequestBody NinjaModel ninja) {
+    public NinjaDTO createNinja(@RequestBody NinjaDTO ninja) {
         return ninjaService.createNinja(ninja);
     }
 
     @PutMapping("/update/{id}")
-    public NinjaModel updateNinjaById(@PathVariable Long id, @RequestBody NinjaModel ninja) {
+    public NinjaDTO updateNinjaById(@PathVariable Long id, @RequestBody NinjaDTO ninja) {
         return ninjaService.updateNinja(id, ninja);
     }
 

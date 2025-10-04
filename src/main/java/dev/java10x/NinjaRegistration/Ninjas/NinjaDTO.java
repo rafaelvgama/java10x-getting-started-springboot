@@ -1,7 +1,6 @@
 package dev.java10x.NinjaRegistration.Ninjas;
 
 import dev.java10x.NinjaRegistration.Missions.MissionModel;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +15,6 @@ public class NinjaDTO {
     private String email;
     private String imgUrl;
     private int age;
-    private String Rank;
+    private String rank;
     private MissionModel mission;
 }
